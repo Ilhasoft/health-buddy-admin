@@ -43,32 +43,42 @@ export default {
         },
       ];
     },
-    makeInteractionsByChannelData(web, mobile, app, facebook, telegram) {
+    makeInteractionsByChannelData(totalWeb, totalMobile, totalWhatsapp, totalViber, totalFacebook, totalTelegram, totalVk) {
       return [
         {
           label: 'Web',
-          value: web,
+          value: totalWeb,
           backgroundColor: '#80bd41',
         },
         {
-          label: 'Web mobile',
-          value: mobile,
+          label: 'Mobile',
+          value: totalMobile,
           backgroundColor: '#f7c10c',
         },
         {
-          label: 'App',
-          value: app,
+          label: 'WhatsApp',
+          value: totalWhatsapp,
           backgroundColor: '#4bace2',
         },
         {
+          label: 'Viber',
+          value: totalViber,
+          backgroundColor: '#8f5db7',
+        },
+        {
           label: 'Facebook',
-          value: facebook,
+          value: totalFacebook,
           backgroundColor: '#e64d35',
         },
         {
           label: 'Telegram',
-          value: telegram,
+          value: totalTelegram,
           backgroundColor: '#182a6d',
+        },
+        {
+          label: 'VK',
+          value: totalVk,
+          backgroundColor: '#4C75A3',
         },
       ];
     },
