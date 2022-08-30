@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable camelcase */
 import { mapGetters } from 'vuex';
 import dashboardChartMixin from './dashboard-chart';
@@ -144,24 +145,28 @@ export default {
           this.registeredFakes,
           this.lowConfidenceResponses,
         );
-        const totalWeb = this.countMessages(channelStatus, 'outgoing', 'EX')
-          + this.countMessages(channelStatus, 'errors', 'EX')
-          + this.countMessages(channelStatus, 'incoming', 'EX');
-        const totalMobile = 0;
-        const totalApp = 0;
-        const totalFacebook = this.countMessages(channelStatus, 'outgoing', 'FB')
-          + this.countMessages(channelStatus, 'errors', 'FB')
-          + this.countMessages(channelStatus, 'incoming', 'FB');
-        const totalTelegram = this.countMessages(channelStatus, 'outgoing', 'TG')
-          + this.countMessages(channelStatus, 'errors', 'TG')
-          + this.countMessages(channelStatus, 'incoming', 'TG');
-        this.interactionsByChannelData = this.makeInteractionsByChannelData(
-          totalWeb,
-          totalMobile,
-          totalApp,
-          totalFacebook,
-          totalTelegram,
-        );
+        // Web
+        const totalWeb = this.countMessages(channelStatus, 'outgoing', 'WEB') + this.countMessages(channelStatus, 'errors', 'WEB')
+         + this.countMessages(channelStatus, 'incoming', 'WEB');
+        // Mobile – App
+        const totalMobile = this.countMessages(channelStatus, 'outgoing', 'HealthBuddy Mobile app') + this.countMessages(channelStatus, 'errors', 'HealthBuddy Mobile app') + this.countMessages(channelStatus, 'incoming', 'HealthBuddy Mobile app');
+        // Whatsapp
+        const totalWhatsApp = this.countMessages(channelStatus, 'outgoing', 'WhatsApp: +41796159389') + this.countMessages(channelStatus, 'errors', 'WhatsApp: +41796159389') + this.countMessages(channelStatus, 'incoming', 'WhatsApp: +41796159389');
+        // Viber
+        const totalViber = this.countMessages(channelStatus, 'outgoing', 'Healthbuddy Viber') + this.countMessages(channelStatus, 'errors', 'Healthbuddy Viber') + this.countMessages(channelStatus, 'incoming', 'Healthbuddy Viber');
+        // FB Messenger
+        const totalFacebook = this.countMessages(channelStatus, 'outgoing', 'HealthBuddy FB')
+         + this.countMessages(channelStatus, 'errors', 'HealthBuddy FB')
+         + this.countMessages(channelStatus, 'incoming', 'HealthBuddy FB');
+        // Telegram
+        const totalTelegram = this.countMessages(channelStatus, 'outgoing', 'HealthBuddy Telegram')
+         + this.countMessages(channelStatus, 'errors', 'HealthBuddy Telegram')
+         + this.countMessages(channelStatus, 'incoming', 'HealthBuddy Telegram');
+        // VK
+        const totalVk = this.countMessages(channelStatus, 'outgoing', 'HealthBuddy VK')
+       + this.countMessages(channelStatus, 'errors', 'HealthBuddy VK')
+       + this.countMessages(channelStatus, 'incoming', 'HealthBuddy VK');
+        this.interactionsByChannelData = this.makeInteractionsByChannelData(totalWeb, totalMobile, totalWhatsApp, totalViber, totalFacebook, totalTelegram, totalVk);
       });
     },
     fetchInteractions() {
@@ -263,7 +268,7 @@ export default {
     countMessages(data, type, channelType = undefined, after = undefined, before = undefined) {
       const resultsUnfiltered = data.results;
       const results = channelType
-        ? resultsUnfiltered.filter((r) => r.channel_type === channelType) : resultsUnfiltered;
+        ? resultsUnfiltered.filter((r) => r.name === channelType) : resultsUnfiltered;
       const dailyCountList = results.map((result) => result.daily_count);
       const filteredMessages = dailyCountList.map(
         (dc) => dc.find((d) => d.name.toLowerCase() === type),
@@ -294,9 +299,7 @@ export default {
     },
     parserUserPerLanguage(data) {
       const results = ((data || {}).results || []);
-      return results
-        .map((result) => this.makeUserPerLanguageResult(result))
-        .filter((result) => result.name.includes('Language = '));
+      return results.map((result) => this.makeUserPerLanguageResult(result)).filter((result) => result.name.includes('Language = ') || result.name.includes('language = '));
     },
     makeUserPerLanguageResult(result) {
       const count = result.count || 0;

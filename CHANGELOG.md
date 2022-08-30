@@ -1,6 +1,13 @@
+v1.5.6
+
+Frontend Changes:
+
+- Added WhatsApp, Viber, and VK to the Interactions by Channel chart list
+- Fixed Interactions by Channel chart to show the correct numbers
+
 v1.5.5
 
-Frontend Changes: 
+Frontend Changes:  
 
 Modified:
 - Login page changed to logo,text and button color and logo background color
